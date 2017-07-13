@@ -1,0 +1,3761 @@
+<!DOCTYPE html>
+<!-- saved from url=(0044)http://test1.jifen360.com/manage/deal/orders -->
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <title>全积分后台管理系统</title>
+  <link rel="stylesheet" type="text/css" href="basic.css">
+  <link rel="stylesheet" type="text/css" href="buttons.css">
+  <link rel="stylesheet" type="text/css" href="font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="datetimepicker.min.css">
+  <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="inner.css">
+  <script type="text/javascript" src="jquery.min.js"></script>
+  <script type="text/javascript" src="bootstrap.min.js"></script>
+  <script type="text/javascript" src="saved_index.js"></script>
+    <style>
+        .statt{height:70px;padding:0 10px;background:#ffe;border:1px solid #d72424;position:fixed;bottom:10px;left:300px;z-index: 999;display: none}
+        .statt dt{width:100%;height:29px;line-height:29px;border-bottom:1px dotted #d72424;color:#d72424}
+        .statt dd{line-height:30px;padding:0 10px;margin:5px 0;}
+        .statt dd+dd{border-left:1px dotted #eee}
+
+    </style>
+</head>
+<body>
+<!--<div class="float_border" style="position:fixed;z-index:999;background-color:#FFFFEE;top:80%;margin-left:20px;border: 1px solid red;display: none;">-->
+  <!--<p style="color: red;padding:4px 8px;border-bottom:1px dashed red">订单统计</p>-->
+    <!--<ul>-->
+        <!--<li>订单数:<span id="sumid"></span></li>-->
+        <!--<li>订单金额：</li>-->
+        <!--<li>客单价：</li>-->
+    <!--</ul>-->
+<!--</div>-->
+
+<dl class="statt">
+    <dt>订单统计</dt>
+    <dd>订单数：<i class="s1"></i></dd>
+    <dd>订单金额：<i class="s2"></i></dd>
+    <dd>客单价：<i class="s4"></i></dd>
+</dl>
+<div id="main">
+  <div class="condition">
+    <form method="post" action="http://test1.jifen360.com/manage/deal/orders">
+      <ul>
+        <li>
+          <label>开始</label>
+          <div class="input-append date form_datetime">
+            <input type="text" value="" name="stime" style="width:90px" readonly="">
+            <span class="add-on"><i class="icon-remove"></i></span><span class="add-on"><i class="icon-th"></i></span>
+          </div>
+        </li>
+        <li>
+          <label>结束</label>
+          <div class="input-append date form_datetime">
+            <input type="text" value="" name="etime" style="width:90px" readonly="">
+            <span class="add-on"><i class="icon-remove"></i></span><span class="add-on"><i class="icon-th"></i></span>
+          </div>
+        </li>
+        <li>
+          <label>状态</label>
+          <select name="status">
+            <option value="">全部</option>
+            <option value="0">未确认</option>
+            <option value="1">已确认</option>
+            <option value="2">异常</option>
+          </select>
+        </li>
+        <!--<li>
+        <label>核销</label>
+        <select name="confirm">
+            <option selected>全部</option>
+            <option value="0">未核销</option>
+            <option value="1">已核销</option>
+        </select>
+        </li>
+        -->
+        <li>
+          <label>扣减方式</label>
+          <select name="manual">
+            <option value="">全部</option>
+            <option value="0">正常</option>
+            <option value="1">人工</option>
+          </select>
+        </li>
+        <li>
+          <label>订单</label>
+          <input type="text" name="order" size="16" class="iorder">
+        </li>
+      </ul>
+      <ul>
+        <li>
+          <label>商户</label>
+          <select name="merchant">
+            <option value="">全部</option>
+            <option value="1">蔚蓝时代</option>
+            <option value="2">金凯伦</option>
+            <option value="3">红旗超市</option>
+            <option value="4">华卓</option>
+          </select>
+        </li>
+        <li>
+          <label>地区</label>
+          <select name="region2">
+            <option value="">全部</option>
+            <option value="23">重庆市</option>
+            <option value="273">成都市</option>
+          </select>
+        </li>
+        <li>
+          <label>业态</label>
+          <select name="category">
+            <option value="">全部</option>
+            <option value="3">购物</option>
+            <option value="4">餐饮</option>
+            <option value="5">书店</option>
+          </select>
+        </li>
+        <li>
+          <label>门店</label>
+          <input type="text" name="store" size="16" class="istore">
+        </li>
+        <li>
+          <label>会员</label>
+          <input type="text" name="user" size="9" class="iuser">
+        </li>
+        <li>
+          <button class="button button-raised button-rounded button-caution button-small"><i class="icon-search"></i> 查询</button>
+          <a class="button button-raised button-rounded button-caution button-small" href="http://test1.jifen360.com/manage/deal/orders?clean=1">清除查询条件</a>
+        </li>
+      </ul>
+    </form>
+  </div>
+  <div class="lists">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <thead>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="chkall" value="0">-->
+              <input type="checkbox" class="chkall">
+          </td>
+        <td>
+          订单时间
+        </td>
+        <td>
+          订单号
+        </td>
+        <td colspan="3">
+          位置
+        </td>
+        <td>
+          门店
+        </td>
+        <td>
+          业态
+        </td>
+        <td>
+          金额
+        </td>
+        <td>
+          会员
+        </td>
+        <td>
+          状态
+        </td>
+        <td>
+          扣减
+        </td>
+        <td>
+          核销
+        </td>
+        <td>
+          核销码
+        </td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-10 09:39:41
+        </td>
+        <td>
+          1707100939540800
+        </td>
+        <td>
+          成都市
+        </td>
+        <td>
+          双流机场
+        </td>
+        <td>
+          T1航站楼
+        </td>
+        <td>
+          艺品阁A-R-4店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          1.00
+        </td>
+        <td>
+          张立
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:red">人工</b>
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-10 08:42:47
+        </td>
+        <td>
+          1707100842477775
+        </td>
+        <td>
+          成都市
+        </td>
+        <td>
+          双流机场
+        </td>
+        <td>
+          T1航站楼
+        </td>
+        <td>
+          成都担担面
+        </td>
+        <td>
+          餐饮
+        </td>
+        <td align="right" class="price">
+          32.00
+        </td>
+        <td>
+          苏铖熹
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-10 08:00:28
+        </td>
+        <td>
+          1707100800288197
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          林顿利茶餐厅5号店
+        </td>
+        <td>
+          餐饮
+        </td>
+        <td align="right" class="price">
+          38.00
+        </td>
+        <td>
+          邱亮
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-10 07:29:42
+        </td>
+        <td>
+          1707100729422986
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          重庆特产G2店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          6.00
+        </td>
+        <td>
+          黄珂
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-09 21:15:09
+        </td>
+        <td>
+          1707092115091943
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          山城特产C1店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          4.00
+        </td>
+        <td>
+          潘伟伟
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-08 19:54:59
+        </td>
+        <td>
+          1707081954590341
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          蔚蓝书店F16店
+        </td>
+        <td>
+          书店
+        </td>
+        <td align="right" class="price">
+          40.00
+        </td>
+        <td>
+          戴元春
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-08 14:57:24
+        </td>
+        <td>
+          1707081457242614
+        </td>
+        <td>
+          成都市
+        </td>
+        <td>
+          双流机场
+        </td>
+        <td>
+          T1航站楼
+        </td>
+        <td>
+          汉堡包
+        </td>
+        <td>
+          餐饮
+        </td>
+        <td align="right" class="price">
+          40.00
+        </td>
+        <td>
+          周大卫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-08 14:01:05
+        </td>
+        <td>
+          1707081401053006
+        </td>
+        <td>
+          成都市
+        </td>
+        <td>
+          双流机场
+        </td>
+        <td>
+          T1航站楼
+        </td>
+        <td>
+          汉堡包
+        </td>
+        <td>
+          餐饮
+        </td>
+        <td align="right" class="price">
+          33.00
+        </td>
+        <td>
+          周大卫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-08 11:59:52
+        </td>
+        <td>
+          1707081159522577
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          蔚蓝书店F8店
+        </td>
+        <td>
+          书店
+        </td>
+        <td align="right" class="price">
+          40.00
+        </td>
+        <td>
+          胡先权
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-07 21:25:14
+        </td>
+        <td>
+          1707072125324602
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          T100B店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          1.00
+        </td>
+        <td>
+          张立
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:red">人工</b>
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-07 20:32:09
+        </td>
+        <td>
+          1707072032095892
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          重庆特产G2店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          6.00
+        </td>
+        <td>
+          余木星
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-07 10:10:41
+        </td>
+        <td>
+          1707071010412213
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          蔚蓝书店F16店
+        </td>
+        <td>
+          书店
+        </td>
+        <td align="right" class="price">
+          40.00
+        </td>
+        <td>
+          敬松
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-07 07:19:03
+        </td>
+        <td>
+          1707070719035355
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          重庆特产A2店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          383.00
+        </td>
+        <td>
+          丁洪明
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-07 07:12:22
+        </td>
+        <td>
+          1707070712220319
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          重庆特产A2店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          1732.00
+        </td>
+        <td>
+          丁洪明
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-07 00:25:34
+        </td>
+        <td>
+          1707070025344419
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          蔚蓝书店F16店
+        </td>
+        <td>
+          书店
+        </td>
+        <td align="right" class="price">
+          45.00
+        </td>
+        <td>
+          王伟全
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-06 16:27:02
+        </td>
+        <td>
+          1707061627020614
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          书吧咖啡茗茶果汁F12店
+        </td>
+        <td>
+          书店
+        </td>
+        <td align="right" class="price">
+          36.00
+        </td>
+        <td>
+          张阿宁
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-06 15:55:20
+        </td>
+        <td>
+          1707061555206362
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          林顿书屋F17店
+        </td>
+        <td>
+          书店
+        </td>
+        <td align="right" class="price">
+          77.00
+        </td>
+        <td>
+          张春光
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-06 15:22:57
+        </td>
+        <td>
+          1707061522575429
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          西南特产A1店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          35.00
+        </td>
+        <td>
+          张阿宁
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-06 10:42:41
+        </td>
+        <td>
+          1707061042410236
+        </td>
+        <td>
+          成都市
+        </td>
+        <td>
+          双流机场
+        </td>
+        <td>
+          T1航站楼
+        </td>
+        <td>
+          芭比克
+        </td>
+        <td>
+          餐饮
+        </td>
+        <td align="right" class="price">
+          50.00
+        </td>
+        <td>
+          张娅
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-05 21:36:33
+        </td>
+        <td>
+          1707052136338950
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          重庆特产G1店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          71.00
+        </td>
+        <td>
+          杨莹
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-05 10:20:00
+        </td>
+        <td>
+          1707051020002360
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          蔚蓝书店F16店
+        </td>
+        <td>
+          书店
+        </td>
+        <td align="right" class="price">
+          68.00
+        </td>
+        <td>
+          荣红
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-05 08:50:30
+        </td>
+        <td>
+          1707050850309995
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          林顿利餐厅2号店安检内B
+        </td>
+        <td>
+          餐饮
+        </td>
+        <td align="right" class="price">
+          451.00
+        </td>
+        <td>
+          朱日坤
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-04 16:55:25
+        </td>
+        <td>
+          1707041655251423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          新秀丽A1店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          280.00
+        </td>
+        <td>
+          李国宏
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-04 13:11:04
+        </td>
+        <td>
+          1707041311046422
+        </td>
+        <td>
+          成都市
+        </td>
+        <td>
+          双流机场
+        </td>
+        <td>
+          T1航站楼
+        </td>
+        <td>
+          成都担担面
+        </td>
+        <td>
+          餐饮
+        </td>
+        <td align="right" class="price">
+          28.00
+        </td>
+        <td>
+          谢东辉
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-04 11:01:11
+        </td>
+        <td>
+          1707041101113651
+        </td>
+        <td>
+          成都市
+        </td>
+        <td>
+          双流机场
+        </td>
+        <td>
+          T1航站楼
+        </td>
+        <td>
+          汉堡包
+        </td>
+        <td>
+          餐饮
+        </td>
+        <td align="right" class="price">
+          1.00
+        </td>
+        <td>
+          张立
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+          <td>
+              <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+              <input type="checkbox" name="export[]" class="export" value="87600012135771">
+          </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr> <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <!--<input type="checkbox" name="chkItem" class="checkbox" value="1">-->
+          <input type="checkbox" name="export[]" class="export" value="87600012135771">
+        </td>
+        <td>
+          2017-07-03 22:55:32
+        </td>
+        <td>
+          1707032255323423
+        </td>
+        <td>
+          重庆市
+        </td>
+        <td>
+          江北机场
+        </td>
+        <td>
+          T2航站楼
+        </td>
+        <td>
+          巴蜀市集A6店
+        </td>
+        <td>
+          购物
+        </td>
+        <td align="right" class="price">
+          75.00
+        </td>
+        <td>
+          段鑫
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+        </td>
+        <td align="center">
+          <b style="color:green">已核销</b>
+        </td>
+        <td>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script type="text/javascript" src="./datetimepicker.min.js.下载"></script>
+<script type="text/javascript" src="./datetimepicker.zh-CN.js.下载"></script>
+<script language="javascript">
+  var curpage;
+  var pages;
+  var total;
+  var totalprice;
+  var isload = false;
+  $(".form_datetime").datetimepicker({
+    format: "yyyy-mm-dd",
+    minView: "month",
+    showMeridian: true,
+    language: 'zh-CN',
+    autoclose: true,
+    todayBtn: true
+  });
+  getOrders();
+  $('form').submit(function() {
+    $('.loading').prevAll().remove();
+    getOrders();
+    return false;
+  });
+  function getOrders(data, type) {
+    var d = data||$('form').serialize();
+    var t = type||'POST';
+    $.ajax({
+      timeout : 30000,
+      //async	: false,
+      type	: t,
+      url		: '/manage/deal/ajaxOrders',
+      dataType: 'json',
+      data	: d,
+      success : function(result) {
+        processAjax(result);
+      },
+      error	: function(result) {
+        alert('读取错误');
+      },
+      complete: function(XMLHttpRequest, status){
+        if (status == 'timeout') {
+          //ajaxTimeoutTest.abort();
+          alert('读取超时');
+        }
+      }
+    });
+  }
+  function processAjax(result) {
+    var html;
+    if (result.pages != 0) {
+      var data = result.list;
+      curpage = result.curpage;// 当前页
+      pages = result.pages;// 总页数
+      total = result.total;// 记录条数
+      totalprice = result.totalprice;// 总金额
+      isload = false;
+      $.each(data, function(index, value) {
+        html = html+'<tr>';
+        $.each(value, function(i, v) {
+          var ag='';
+          if (i=='money') {ag = ' align="right"';}
+          if (i=='status'||i=='manual'||i=='confirm') {ag=' align="center"';}
+          html = html+'<td'+ag+'>'+v+'</td>';
+        });
+        html = html+'</tr>';
+      });
+      $('.loading').before(html);
+    }
+    $('.loading').hide();
+  }
+  $(function(){
+    $(window).scroll(function() {
+      if ($(this).scrollTop() + $(window).height() + 20 >= $(document).height() && $(this).scrollTop() > 20) {
+        var nextpage = curpage+1;
+        if (nextpage <= pages && isload == false) {
+          $('.loading').show();
+          getOrders('page='+nextpage, 'GET');
+          //curpage = nextpage;
+          isload = true;
+        }
+      }
+    });
+  });
+</script>
+<div class="datetimepicker datetimepicker-dropdown-bottom-right dropdown-menu" style="left: 207.875px; z-index: 1010;">
+  <div class="datetimepicker-minutes" style="display: none;">
+    <table class=" table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          10 七月 2017
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="7">
+          <fieldset class="minute">
+            <legend>下午</legend><span class="minute">3:00</span><span class="minute active">3:05</span><span class="minute">3:10</span><span class="minute">3:15</span><span class="minute">3:20</span><span class="minute">3:25</span><span class="minute">3:30</span><span class="minute">3:35</span><span class="minute">3:40</span><span class="minute">3:45</span><span class="minute">3:50</span><span class="minute">3:55</span>
+          </fieldset>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="datetimepicker-hours" style="display: none;">
+    <table class=" table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          10 七月 2017
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="7">
+          <fieldset class="hour">
+            <legend>上午</legend><span class="hour hour_am">12</span><span class="hour hour_am">1</span><span class="hour hour_am">2</span><span class="hour hour_am">3</span><span class="hour hour_am">4</span><span class="hour hour_am">5</span><span class="hour hour_am">6</span><span class="hour hour_am">7</span><span class="hour hour_am">8</span><span class="hour hour_am">9</span><span class="hour hour_am">10</span><span class="hour hour_am">11</span>
+          </fieldset>
+          <fieldset class="hour">
+            <legend>下午</legend><span class="hour hour_pm">12</span><span class="hour hour_pm">1</span><span class="hour hour_pm">2</span><span class="hour active hour_pm">3</span><span class="hour hour_pm">4</span><span class="hour hour_pm">5</span><span class="hour hour_pm">6</span><span class="hour hour_pm">7</span><span class="hour hour_pm">8</span><span class="hour hour_pm">9</span><span class="hour hour_pm">10</span><span class="hour hour_pm">11</span>
+          </fieldset>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="datetimepicker-days" style="display: block;">
+    <table class=" table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          七月 2017
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      <tr>
+        <th class="dow">
+          日
+        </th>
+        <th class="dow">
+          一
+        </th>
+        <th class="dow">
+          二
+        </th>
+        <th class="dow">
+          三
+        </th>
+        <th class="dow">
+          四
+        </th>
+        <th class="dow">
+          五
+        </th>
+        <th class="dow">
+          六
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="day old">
+          25
+        </td>
+        <td class="day old">
+          26
+        </td>
+        <td class="day old">
+          27
+        </td>
+        <td class="day old">
+          28
+        </td>
+        <td class="day old">
+          29
+        </td>
+        <td class="day old">
+          30
+        </td>
+        <td class="day">
+          1
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          2
+        </td>
+        <td class="day">
+          3
+        </td>
+        <td class="day">
+          4
+        </td>
+        <td class="day">
+          5
+        </td>
+        <td class="day">
+          6
+        </td>
+        <td class="day">
+          7
+        </td>
+        <td class="day">
+          8
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          9
+        </td>
+        <td class="day active">
+          10
+        </td>
+        <td class="day">
+          11
+        </td>
+        <td class="day">
+          12
+        </td>
+        <td class="day">
+          13
+        </td>
+        <td class="day">
+          14
+        </td>
+        <td class="day">
+          15
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          16
+        </td>
+        <td class="day">
+          17
+        </td>
+        <td class="day">
+          18
+        </td>
+        <td class="day">
+          19
+        </td>
+        <td class="day">
+          20
+        </td>
+        <td class="day">
+          21
+        </td>
+        <td class="day">
+          22
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          23
+        </td>
+        <td class="day">
+          24
+        </td>
+        <td class="day">
+          25
+        </td>
+        <td class="day">
+          26
+        </td>
+        <td class="day">
+          27
+        </td>
+        <td class="day">
+          28
+        </td>
+        <td class="day">
+          29
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          30
+        </td>
+        <td class="day">
+          31
+        </td>
+        <td class="day new">
+          1
+        </td>
+        <td class="day new">
+          2
+        </td>
+        <td class="day new">
+          3
+        </td>
+        <td class="day new">
+          4
+        </td>
+        <td class="day new">
+          5
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="datetimepicker-months" style="display: none;">
+    <table class="table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          2017
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="7">
+          <span class="month">一月</span><span class="month">二月</span><span class="month">三月</span><span class="month">四月</span><span class="month">五月</span><span class="month">六月</span><span class="month active">七月</span><span class="month">八月</span><span class="month">九月</span><span class="month">十月</span><span class="month">十一月</span><span class="month">十二月</span>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="datetimepicker-years" style="display: none;">
+    <table class="table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          2010-2019
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="7">
+          <span class="year ">2009</span><span class="year">2010</span><span class="year">2011</span><span class="year">2012</span><span class="year">2013</span><span class="year">2014</span><span class="year">2015</span><span class="year">2016</span><span class="year active">2017</span><span class="year">2018</span><span class="year">2019</span><span class="year ">2020</span>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<div class="datetimepicker datetimepicker-dropdown-bottom-right dropdown-menu" style="left: 418.766px; z-index: 1020;">
+  <div class="datetimepicker-minutes" style="display: none;">
+    <table class=" table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          10 七月 2017
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="7">
+          <fieldset class="minute">
+            <legend>下午</legend><span class="minute">3:00</span><span class="minute active">3:05</span><span class="minute">3:10</span><span class="minute">3:15</span><span class="minute">3:20</span><span class="minute">3:25</span><span class="minute">3:30</span><span class="minute">3:35</span><span class="minute">3:40</span><span class="minute">3:45</span><span class="minute">3:50</span><span class="minute">3:55</span>
+          </fieldset>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="datetimepicker-hours" style="display: none;">
+    <table class=" table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          10 七月 2017
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="7">
+          <fieldset class="hour">
+            <legend>上午</legend><span class="hour hour_am">12</span><span class="hour hour_am">1</span><span class="hour hour_am">2</span><span class="hour hour_am">3</span><span class="hour hour_am">4</span><span class="hour hour_am">5</span><span class="hour hour_am">6</span><span class="hour hour_am">7</span><span class="hour hour_am">8</span><span class="hour hour_am">9</span><span class="hour hour_am">10</span><span class="hour hour_am">11</span>
+          </fieldset>
+          <fieldset class="hour">
+            <legend>下午</legend><span class="hour hour_pm">12</span><span class="hour hour_pm">1</span><span class="hour hour_pm">2</span><span class="hour active hour_pm">3</span><span class="hour hour_pm">4</span><span class="hour hour_pm">5</span><span class="hour hour_pm">6</span><span class="hour hour_pm">7</span><span class="hour hour_pm">8</span><span class="hour hour_pm">9</span><span class="hour hour_pm">10</span><span class="hour hour_pm">11</span>
+          </fieldset>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="datetimepicker-days" style="display: block;">
+    <table class=" table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          七月 2017
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      <tr>
+        <th class="dow">
+          日
+        </th>
+        <th class="dow">
+          一
+        </th>
+        <th class="dow">
+          二
+        </th>
+        <th class="dow">
+          三
+        </th>
+        <th class="dow">
+          四
+        </th>
+        <th class="dow">
+          五
+        </th>
+        <th class="dow">
+          六
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="day old">
+          25
+        </td>
+        <td class="day old">
+          26
+        </td>
+        <td class="day old">
+          27
+        </td>
+        <td class="day old">
+          28
+        </td>
+        <td class="day old">
+          29
+        </td>
+        <td class="day old">
+          30
+        </td>
+        <td class="day">
+          1
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          2
+        </td>
+        <td class="day">
+          3
+        </td>
+        <td class="day">
+          4
+        </td>
+        <td class="day">
+          5
+        </td>
+        <td class="day">
+          6
+        </td>
+        <td class="day">
+          7
+        </td>
+        <td class="day">
+          8
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          9
+        </td>
+        <td class="day active">
+          10
+        </td>
+        <td class="day">
+          11
+        </td>
+        <td class="day">
+          12
+        </td>
+        <td class="day">
+          13
+        </td>
+        <td class="day">
+          14
+        </td>
+        <td class="day">
+          15
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          16
+        </td>
+        <td class="day">
+          17
+        </td>
+        <td class="day">
+          18
+        </td>
+        <td class="day">
+          19
+        </td>
+        <td class="day">
+          20
+        </td>
+        <td class="day">
+          21
+        </td>
+        <td class="day">
+          22
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          23
+        </td>
+        <td class="day">
+          24
+        </td>
+        <td class="day">
+          25
+        </td>
+        <td class="day">
+          26
+        </td>
+        <td class="day">
+          27
+        </td>
+        <td class="day">
+          28
+        </td>
+        <td class="day">
+          29
+        </td>
+      </tr>
+      <tr>
+        <td class="day">
+          30
+        </td>
+        <td class="day">
+          31
+        </td>
+        <td class="day new">
+          1
+        </td>
+        <td class="day new">
+          2
+        </td>
+        <td class="day new">
+          3
+        </td>
+        <td class="day new">
+          4
+        </td>
+        <td class="day new">
+          5
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="datetimepicker-months" style="display: none;">
+    <table class="table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          2017
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="7">
+          <span class="month">一月</span><span class="month">二月</span><span class="month">三月</span><span class="month">四月</span><span class="month">五月</span><span class="month">六月</span><span class="month active">七月</span><span class="month">八月</span><span class="month">九月</span><span class="month">十月</span><span class="month">十一月</span><span class="month">十二月</span>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="datetimepicker-years" style="display: none;">
+    <table class="table-condensed">
+      <thead>
+      <tr>
+        <th class="prev" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-left"></i>
+        </th>
+        <th colspan="5" class="switch">
+          2010-2019
+        </th>
+        <th class="next" style="visibility: visible;">
+          <i class="glyphicon icon-arrow-right"></i>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td colspan="7">
+          <span class="year ">2009</span><span class="year">2010</span><span class="year">2011</span><span class="year">2012</span><span class="year">2013</span><span class="year">2014</span><span class="year">2015</span><span class="year">2016</span><span class="year active">2017</span><span class="year">2018</span><span class="year">2019</span><span class="year ">2020</span>
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <th colspan="7" class="today">
+          今天
+        </th>
+      </tr>
+      <tr>
+        <th colspan="7" class="clear" style="display: none;">
+          Clear
+        </th>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+<script>
+//$(".chkall").on("click",function() {
+//    if(this.checked){
+//        $("input[type='checkbox']").each(function(){this.checked=true;});
+//        $(".statt").toggle();
+////        var tr=document.getElementsByTagName("tr");
+////        for(var i=1;i<tr.length;i++){
+////            tr[i].style.backgroundColor='#FFFFCA';
+////        }
+//    }else{
+//        $("input[type='checkbox']").each(function(){this.checked=false;});
+//        $(".statt").toggle();
+////        var tr=document.getElementsByTagName("tr");
+////        for(var i=0;i<tr.length;i++){
+////            $('.lists tbody tr:even').css("backgroundColor","#f9f9f9");//偶数行
+////            $('.lists tbody tr:odd').css("backgroundColor","white");//奇数行
+////        }
+//    }
+//});//全选
+//$(".checkbox").on("click",function() {
+//    if(this.checked){
+//        $(".statt").show();
+//    }else{
+//        $(".statt").show();
+//    }
+//});//单选框
+//
+////点击行勾选框
+//$(".lists tbody tr").click(function(e){
+//    var check = $(this).find("input[type='checkbox']");
+//    if(check){
+//        var flag = check[0].checked;
+//        if(flag){
+//            check[0].checked = false;
+//            $(".statt").show();
+//            $('.lists tbody tr:even').css("backgroundColor","#f9f9f9");//偶数行
+//            $('.lists tbody tr:odd').css("backgroundColor","white");//奇数行
+//
+//        }else{
+//            check[0].checked = true;
+//            $(".statt").show();
+//            this.style.backgroundColor='#FFFFCA';
+//        }
+//    }
+//});
+//$("input[type='checkbox']").click(function(e){
+//    e.stopPropagation();
+//});
+//
+////计算订单数
+//$(function(){
+//    var chkItem = $('input[name=chkItem]');
+//    chkItem.click(function(){
+//        $('.s1').html(sum());
+//    });
+//});
+//function sum(){
+//    var valueArr= $('input[name=chkItem]');
+//    var sumValue=0;
+//    valueArr.each(function(index, element) {
+//        if($(this).is(":checked")){
+//            if(isNaN(valueArr[index].value)||valueArr[index].value==null||valueArr[index].value==""){
+//                sumValue +=0;
+//            }else{
+//                sumValue +=parseFloat(valueArr[index].value);//强制转换为数字
+//            }
+//
+//        }
+//    });
+//    if(sumValue>0){
+//        sumValue = parseInt(sumValue);
+//    }
+//    else{
+//        sumValue = 0;
+//    }
+//    return sumValue;
+//}
+
+$('.chkall').click(function(){
+    var	flag = $(this).is(':checked');
+    $(this).siblings().attr("checked", flag);
+    $.each($('.lists tbody tr'),function(i, e) {
+        var s = $(e).hasClass('selected');
+        if (flag) {
+            if (!s) {
+                $(e).click();
+            } else {
+                return true;
+            }
+        } else {
+            if (s) {
+                $(e).click();
+            } else {
+                return true;
+            }
+        }
+    });
+    var st = statt();
+    if (st) {
+        $('.statt').slideDown();
+    } else {
+        $('.statt').slideUp();
+    }
+});
+
+$("tbody").delegate('tr', 'click', function () {
+    if ($(this).hasClass("selected")) {
+        $(this).removeClass("selected").find(":checkbox").attr("checked", false);
+        setSelectAll();
+    } else {
+        $(this).addClass("selected").find(":checkbox").attr("checked", true);
+        setSelectAll();
+    }
+});
+
+function setSelectAll(){
+    var chsub = $("input[type='checkbox'][class='export']").length;
+    var checkedsub = $("input[type='checkbox'][class='export']:checked").length;
+    if (checkedsub == chsub) {
+        $(".chkall").attr("checked", true).siblings().attr("checked", true);
+    } else {
+        $(".chkall").attr("checked", false).siblings().attr("checked", false);
+    }
+    var st = statt();
+    if (st) {
+        $('.statt').slideDown();
+    } else {
+        $('.statt').slideUp();
+    }
+}
+function statt() {
+    var num;
+    var totalprice=0;
+    var average=0;
+    var datas = $('tbody input[type=checkbox]:checked');
+    datas.each(function(index, element) {
+        var price= $('.price').eq(index).html() * 1;
+//        console.log(price);
+        num=parseInt(num);
+        toalprice=parseInt(totalprice);
+        average=parseInt(average);
+        price=parseInt(price);
+        totalprice += price;
+        num=datas.length;
+        average=totalprice/num;
+    });
+//    console.log(num);
+//    console.log(totalprice);
+//    console.log(average);
+    $(".s1").html(num);
+    $(".s2").html(totalprice);
+    $('.s4').html(average.toFixed(2));
+    return num;
+}
+
+</script>
+</body>
+</html>
+

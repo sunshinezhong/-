@@ -1,34 +1,39 @@
-<!DOCTYPE html>
-<html >
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
- 
-  <title>jQuery打字特效 </title>
-<meta name="keywords" content="canvas动画, 手机微信网站特效, css3动画, html5特效, 网页特效" />
-<meta name="description" content="前端开发-专注于HTML5、CSS3、js、jQuery、手机移动端等网页特效的手机与分享。" />
-  
-  
-      <link rel="stylesheet" href="css/style.css">
-
-  
+    <title>测试</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <script src="jquery.min.js"></script>
+    <script type="text/javascript">
+        var displayMessage = function (form)
+        {
+            document.getElementById('view').innerHTML = form.t2.value;
+            return false;
+        }
+    </script>
+    <style type="text/css">
+    </style>
 </head>
-
 <body>
-
-<div class="type-js headline">
-  <h1 class="text-js">hello, welcome to 81hu.com</h1>
-  
-</div>
-
-
-
-
-
-
-
-<script src="http://libs.baidu.com/jquery/1.7.2/jquery.js"></script>
-
-      <script src="js/index.js"></script>
-
+<form name="t" onsubmit="return displayMessage(this);">
+    <table>
+        <tr>
+            <td>姓名:</td>
+            <td><input type="text" name="t1" id="t1" placeholder="请输入姓名"></td>
+        </tr>
+        <tr>
+            <td>评论内容:</td>
+            <td><input type="text" name="t2" id="t2" placeholder="请输入评论内容">
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="提交" /></td>
+            <td><input type="reset" value="重置" /></td>
+        </tr>
+    </table>
+</form>
+<div id="view"></div>
 </body>
 </html>
